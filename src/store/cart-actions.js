@@ -18,7 +18,10 @@ export const fetchCartData = () => {
 
     try {
       const cartData = await fetchData() //cartData = 上面return的data
-      dispatch(cartActions.replaceCart(cartData))
+      dispatch(cartActions.replaceCart({
+          items: cartData.items || [], //修正購物車為0時的error
+          totalQty: cartData.totalQty
+      }))
     } catch (error) {
       //if error
       dispatch(
@@ -50,8 +53,8 @@ export const sendCartData = (cart) => {
         {
           method: 'PUT', // PUT: overwrtite existing cart
           body: JSON.stringify({
-              items: cart.items,
-              totalQty: cart.totalQty
+            items: cart.items,
+            totalQty: cart.totalQty,
           }),
           //   body: JSON.stringify(cart),
         }
