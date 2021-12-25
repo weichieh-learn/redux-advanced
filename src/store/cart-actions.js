@@ -49,7 +49,11 @@ export const sendCartData = (cart) => {
         'https://redux-advanced-476ea-default-rtdb.firebaseio.com/cart.json',
         {
           method: 'PUT', // PUT: overwrtite existing cart
-          body: JSON.stringify(cart),
+          body: JSON.stringify({
+              items: cart.items,
+              totalQty: cart.totalQty
+          }),
+          //   body: JSON.stringify(cart),
         }
       )
       if (!res.ok) {

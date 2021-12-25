@@ -5,6 +5,7 @@ const cartSlice = createSlice({
   initialState: {
     items: [],
     totalQty: 0,
+    changed: false,
     // cartPrice: 0
   },
   reducers: {
@@ -16,6 +17,7 @@ const cartSlice = createSlice({
       const newItem = action.payload
       const existingItem = state.items.find((item) => item.id === newItem.id) //是否已經有加入此商品
       state.totalQty++
+      state.changed = true
       if (!existingItem) {
         // must NOT do in Redux, but Redux-toolkit is fine
         state.items.push({
@@ -34,6 +36,7 @@ const cartSlice = createSlice({
       const id = action.payload
       const existingItem = state.items.find((item) => item.id === id)
       state.totalQty--
+      state.changed = true
       if (existingItem.qty === 1) {
         state.items = state.items.filter((item) => item.id !== id)
       } else {
