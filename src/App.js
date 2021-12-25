@@ -5,7 +5,7 @@ import Cart from './components/Cart/Cart'
 import Layout from './components/Layout/Layout'
 import Products from './components/Shop/Products'
 import Notification from './components/UI/Notification'
-import { sendCartData } from './store/cart-actions'
+import { sendCartData, fetchCartData } from './store/cart-actions'
 
 // 定義在App元件之外，不會被改變，也不會在component被重新render的時候被重置
 // 只會在file被第一次打開的時候被重置
@@ -16,6 +16,10 @@ function App() {
   const cartIsVisible = useSelector((state) => state.ui.cartIsVisible)
   const cart = useSelector((state) => state.cart)
   const notification = useSelector((state) => state.ui.notification)
+
+  useEffect(() => {
+    dispatch(fetchCartData())
+  }, [dispatch])
 
   useEffect(() => {
     if(isInitial) {

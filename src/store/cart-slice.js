@@ -8,6 +8,10 @@ const cartSlice = createSlice({
     // cartPrice: 0
   },
   reducers: {
+    replaceCart(state, action) {
+      state.totalQty = action.payload.totalQty
+      state.items = action.payload.items
+    },
     addItemToCart(state, action) {
       const newItem = action.payload
       const existingItem = state.items.find((item) => item.id === newItem.id) //是否已經有加入此商品

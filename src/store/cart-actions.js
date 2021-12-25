@@ -1,4 +1,36 @@
 import { uiActions } from './ui-slice'
+import { cartActions } from './cart-slice'
+
+export const fetchCartData = () => {
+  // 撈出購物車的資料
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const res = await fetch(
+        'https://redux-advanced-476ea-default-rtdb.firebaseio.com/cart.json'
+      )
+      if (!res.ok) {
+        throw new Error('Could not fetch cart data!')
+      }
+
+      const data = await res.json()
+      return data
+    }
+
+    try {
+      const cartData = await fetchData() //cartData = 上面return的data
+      dispatch(cartActions.replaceCart(cartData))
+    } catch (error) {
+      //if error
+      dispatch(
+        uiActions.showNotification({
+          status: 'error',
+          title: 'Error!',
+          message: 'Fetching data failed!',
+        })
+      )
+    }
+  }
+}
 
 export const sendCartData = (cart) => {
   // return a async function
